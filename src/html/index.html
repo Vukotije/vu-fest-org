@@ -30,7 +30,7 @@
       defer
     ></script>
     <link rel="stylesheet" href="../../public/css/style.css" />
-    <script src="../js/login_register.js" defer></script>
+    <script src="../js/authentication.js" defer></script>
   </head>
 
   <body>
@@ -42,9 +42,9 @@
           <img src="../../public/img/vu_fest_logo.png" width="50" />
           <span>
             <strong>
-              <span class="pink-colour webname">Vu</span
-              ><span class="orange-colour webname">Events</span
-              ><span class="blue-colour webname">Org</span>
+              <span class="pink-color webname">Vu</span
+              ><span class="orange-color webname">Events</span
+              ><span class="blue-color webname">Org</span>
             </strong>
           </span>
         </a>
@@ -94,7 +94,7 @@
             </li>
             <li class="" id="liRegisterButton">
               <button
-                class="btn btn-bublue m-md-0 mt-2 me-2"
+                class="btn btn-blue m-md-0 mt-2 me-2"
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#RegisterUserModal"
@@ -125,7 +125,7 @@
     >
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header btn-bublue">
+          <div class="modal-header btn-blue">
             <h3 class="modal-title text-light" id="RegisterUserModalLabel">
               Registracija Korisnika
             </h3>
@@ -401,7 +401,7 @@
     </div>
 
     <!-- About -->
-    <section class="text-light text-start p-4 glavno-polje" id="about">
+    <section class="text-light text-start p-4 main-field" id="about">
       <div class="container-fluid">
         <div class="d-md-flex align-items-center justify-content-between">
           <div>
@@ -425,7 +425,7 @@
       </div>
     </section>
 
-    <!-- Search organisator cards -->
+    <!-- Search organizer cards -->
     <section
       class="search d-flex justify-content-center align-items-center"
       id="org-search"
@@ -435,7 +435,7 @@
           <div class="col-12 col-md-7 col-lg-6 col-xl-5 row-cols-1 mx-auto">
             <div class="input-group mb-3" id="searchForm">
               <input
-                id="OrgSearchInput"
+                id="organizerSearchInput"
                 class="form-control"
                 type="search"
                 placeholder="Ime organizatora..."
@@ -443,7 +443,7 @@
               <button
                 class="btn btn-orange"
                 type="button"
-                id="OrganisatorSearchButton"
+                id="organizerSearchButton"
               >
                 Search
               </button>
@@ -453,8 +453,8 @@
       </div>
     </section>
 
-    <!-- Organisator cards -->
-    <section id="organizatori" class="text-dark">
+    <!-- Organizer cards -->
+    <section id="organizers" class="text-dark">
       <div class="container-fluid">
         <div class="row">
           <div class="col text-center">
@@ -464,7 +464,7 @@
         <!-- Cards: -->
         <div
           class="row row-cols-1 row-cols-md-2 row-cols-xl-3 m-5"
-          id="organisatorsRow"
+          id="organizersRow"
         >
           <!-- <div class="col mb-4">
             <div class="card border-4 rounded-3">

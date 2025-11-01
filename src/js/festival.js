@@ -10,7 +10,7 @@ const festivalMaxPersons = document.getElementById("festivalMaxPersons");
 const festivalDescription = document.getElementById("festivalDescription");
 
 // Ikonice za tip festivala
-const TIP = {
+const FESTIVAL_TYPES = {
   Muzički:
     '<svg xmlns="http://www.w3.org/2000/svg" height="2em" fill="currentColor" class="bi bi-music-note-beamed pe-2" viewBox="0 0 16 16"><path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2"></path><path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z"></path><path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z"></path></svg>',
   Umetnički:
@@ -28,7 +28,7 @@ const festivalTypeIconContainer = document.getElementById(
 //
 
 // Ikonice za prevoz
-const PREVOZ = {
+const TRANSPORT_TYPES = {
   Sopstveni:
     '<svg xmlns="http://www.w3.org/2000/svg" height="2em" fill="currentColor" class="bi bi-signpost-split pe-2" viewBox="0 0 16 16"><path d="M7 7V1.414a1 1 0 0 1 2 0V2h5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.8 5.6a1 1 0 0 1-.8.4H9v10H7v-5H2a1 1 0 0 1-.8-.4L.225 9.3a.5.5 0 0 1 0-.6L1.2 7.4A1 1 0 0 1 2 7zm1 3V8H2l-.75 1L2 10zm0-5h6l.75-1L14 3H8z"></path></svg>',
   Avion:
@@ -59,9 +59,9 @@ function getFestivalInfo() {
 
         festivalName.innerHTML = festival.naziv;
         festivalType.innerHTML = festival.tip;
-        festivalTypeIconContainer.innerHTML = TIP[festival.tip];
+        festivalTypeIconContainer.innerHTML = FESTIVAL_TYPES[festival.tip];
         festivalTransport.innerHTML = festival.prevoz;
-        festivalTransportIconContainer.innerHTML = PREVOZ[festival.prevoz];
+        festivalTransportIconContainer.innerHTML = TRANSPORT_TYPES[festival.prevoz];
         festivalPrice.innerHTML = festival.cena;
         festivalMaxPersons.innerHTML = festival.maxOsoba;
         festivalDescription.innerHTML = festival.opis;
@@ -92,7 +92,7 @@ function getFestivalInfo() {
           activeStatus = "";
         }
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        window.location.href = "error.html?error=" + this.status;
       }
     }
   };

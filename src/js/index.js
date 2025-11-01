@@ -1,10 +1,10 @@
 const fireBaseUrl = "https://wd-sv-67-2023-default-rtdb.firebaseio.com/";
-const organisatorsRow = document.getElementById("organisatorsRow");
-const SearchButton = document.getElementById("OrganisatorSearchButton");
+const organizersRow = document.getElementById("organizersRow");
+const searchButton = document.getElementById("organizerSearchButton");
 
-getAllOrganisators();
+getAllOrganizers();
 
-SearchButton.addEventListener("click", searchOrganisators);
+searchButton.addEventListener("click", searchOrganizers);
 
 /* Organizator html card prototype
 <div class="col mb-4">
@@ -24,28 +24,28 @@ SearchButton.addEventListener("click", searchOrganisators);
 </div> 
 */
 
-function getAllOrganisators() {
+function getAllOrganizers() {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        organisatorsRow.innerHTML = "";
-        let organisators = JSON.parse(request.responseText);
+        organizersRow.innerHTML = "";
+        let organizers = JSON.parse(request.responseText);
 
-        for (let id in organisators) {
-          let organisator = organisators[id];
-          organisatorsRow.innerHTML += `
+        for (let id in organizers) {
+          let organizer = organizers[id];
+          organizersRow.innerHTML += `
             <div class="col mb-4">
                 <div class="card border-4 rounded-3">
-                    <a href="organisator.html?organisatorId=${id}">
+                    <a href="organisator.html?organizerId=${id}">
                         <div class="ratio ratio-16x9">
                             <img
                             class="card-img-top w-100 border-bottom-thick-orange"
-                            src="${organisator.logo}"
+                            src="${organizer.logo}"
                             />
                         </div>
                         <div class="p-3 fw-normal text-center">
-                            <h4>${organisator.naziv}</h4>
+                            <h4>${organizer.naziv}</h4>
                         </div>
                     </a>
                 </div>
@@ -61,32 +61,32 @@ function getAllOrganisators() {
   request.send();
 }
 
-function searchOrganisators() {
-  let searchInput = document.getElementById("OrgSearchInput").value;
+function searchOrganizers() {
+  let searchInput = document.getElementById("organizerSearchInput").value;
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        organisatorsRow.innerHTML = "";
-        let organisators = JSON.parse(request.responseText);
+        organizersRow.innerHTML = "";
+        let organizers = JSON.parse(request.responseText);
 
-        for (let id in organisators) {
-          let organisator = organisators[id];
+        for (let id in organizers) {
+          let organizer = organizers[id];
           if (
-            organisator.naziv.toLowerCase().includes(searchInput.toLowerCase())
+            organizer.naziv.toLowerCase().includes(searchInput.toLowerCase())
           ) {
-            organisatorsRow.innerHTML += `
+            organizersRow.innerHTML += `
             <div class="col mb-4">
                 <div class="card border-4 rounded-3">
-                    <a href="organisator.html?organisatorId=${id}">
+                    <a href="organisator.html?organizerId=${id}">
                         <div class="ratio ratio-16x9">
                             <img
                             class="card-img-top w-100 border-bottom-thick-orange"
-                            src="${organisator.logo}"
+                            src="${organizer.logo}"
                             />
                         </div>
                         <div class="p-3 fw-normal text-center">
-                            <h4>${organisator.naziv}</h4>
+                            <h4>${organizer.naziv}</h4>
                         </div>
                     </a>
                 </div>

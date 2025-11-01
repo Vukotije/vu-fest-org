@@ -30,10 +30,10 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <script src="../js/login_register.js" defer></script>
+    <script src="../js/authentication.js" defer></script>
   </head>
 
-  <body class="glavno-polje">
+  <body class="main-field">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md sticky-top bg-dark">
       <div class="container-fluid py-2">
@@ -42,9 +42,9 @@
           <img src="../../public/img/vu_fest_logo.png" width="50" />
           <span>
             <strong>
-              <span class="pink-colour webname">Vu</span
-              ><span class="orange-colour webname">Events</span
-              ><span class="blue-colour webname">Org</span>
+              <span class="pink-color webname">Vu</span
+              ><span class="orange-color webname">Events</span
+              ><span class="blue-color webname">Org</span>
             </strong>
           </span>
         </a>
@@ -94,7 +94,7 @@
             </li>
             <li class="" id="liRegisterButton">
               <button
-                class="btn btn-bublue m-md-0 mt-2 me-2"
+                class="btn btn-blue m-md-0 mt-2 me-2"
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#RegisterUserModal"
@@ -125,7 +125,7 @@
     >
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header btn-bublue">
+          <div class="modal-header btn-blue">
             <h3 class="modal-title text-light" id="RegisterUserModalLabel">
               Registracija Korisnika
             </h3>
@@ -400,84 +400,81 @@
       ></button>
     </div>
 
-    <!-- About User Table  -->
+    <!-- User Table Heading -->
     <section style="text-align: center">
       <div
         class="bg-secondary text-light p-3 py-2 my-4 rounded-3"
         style="display: inline-block"
       >
-        <h1><b>Svi organizatori:</b></h1>
+        <h1><b>Svi korisnici:</b></h1>
       </div>
     </section>
 
     <!-- Users Table -->
     <section id="org-info">
       <div class="table-responsive bg-light mx-5 mb-5 rounded-3">
-        <table id="organisatorsTable" class="table table-striped bg-light">
+        <table id="usersTable" class="table table-striped bg-light">
           <thead>
             <tr>
-              <th>Organizator</th>
-              <th>Adresa</th>
-              <th>Godina Osnivanja</th>
-              <th>Telefon</th>
+              <th>Korisničko Ime</th>
+              <th>Lozinka</th>
+              <th>Ime</th>
+              <th>Prezime</th>
               <th>Email</th>
+              <th>Datum rodjenja</th>
+              <th>Adresa</th>
+              <th>Telefon</th>
+              <th>Zanimanje</th>
               <th>...</th>
             </tr>
           </thead>
-          <tbody id="organisatorsTableData"></tbody>
+          <tbody id="usersTableData">
+            <!--  -->
+          </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Edit Organisator Modal -->
+    <!-- Edit User Modal -->
     <div
       class="modal fade"
-      id="EditOrganisatorModal"
+      id="EditUserModal"
       tabindex="-1"
-      aria-labelledby="EditOrganisatorModalLabel"
+      aria-labelledby="EditUserModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header btn-orange">
-            <h3 class="modal-title text-light" id="EditOrganisatorModalLabel">
-              Izmena Podataka Organizatora
+          <div class="modal-header btn-pink">
+            <h3 class="modal-title text-light" id="EditUserModalLabel">
+              Izmena Korisničkih Podataka
             </h3>
           </div>
           <div class="modal-body">
-            <img id="logoPreview" src="" class="w-100 rounded-3 mb-3" />
-            <form
-              class="row g-3 row-cols-1 row-cols-xl-2 d-flex justify-content-center align-items-center"
-              id="editOrganisatorForm"
-              novalidate
-            >
-              <div class="col-12 form-floating">
+            <form class="row g-3" id="editUserForm" novalidate>
+              <div class="col-md-6 form-floating">
                 <input
                   type="text"
                   class="form-control"
-                  id="inputOrganisatorName"
-                  placeholder="organizator"
+                  id="inputEditName"
+                  placeholder="ime"
                   required
                   name="name"
                 />
-                <label for="inputOrganisatorName" class="form-label"
-                  >Organizator</label
-                >
+                <label for="inputEditName" class="form-label">Ime</label>
                 <div class="invalid-feedback">Obavezno polje!</div>
               </div>
 
-              <div class="col-12 form-floating">
+              <div class="col-md-6 form-floating">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
-                  id="inputOrganisatorYear"
-                  placeholder="godina"
+                  id="inputEditSurname"
+                  placeholder="prezime"
                   required
-                  name="year"
+                  name="surname"
                 />
-                <label for="inputOrganisatorYear" class="form-label"
-                  >Godina Osnivanja</label
-                >
+                <label for="inputEditSurname" class="form-label">Prezime</label>
                 <div class="invalid-feedback">Obavezno polje!</div>
               </div>
 
@@ -485,38 +482,91 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="inputOrganisatorPhone"
-                  placeholder="telfon"
+                  id="inputEditUsername"
+                  placeholder="korisničko ime"
                   required
-                  name="phone"
+                  name="username"
+                  disabled
                 />
-                <label for="inputOrganisatorPhone" class="form-label"
-                  >Telefon</label
+                <label for="inputEditUsername" class="form-label"
+                  >Korisničko Ime</label
                 >
-                <div
-                  class="invalid-feedback"
-                  id="phonelOrganisatorInvalidFeedback"
-                >
+                <div class="invalid-feedback" id="usernameEditInvalidFeedback">
                   Obavezno polje!
                 </div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="inputEditPassword"
+                  placeholder="lozinka"
+                  required
+                  name="password"
+                />
+                <label for="inputEditPassword" class="form-label"
+                  >Lozinka</label
+                >
+                <div class="invalid-feedback">Obavezno polje!</div>
               </div>
 
               <div class="col-12 form-floating">
                 <input
                   type="email"
                   class="form-control"
-                  id="inputOrganisatorEmail"
+                  id="inputEditEmail"
                   placeholder="email"
                   required
                   name="email"
                 />
-                <label for="inputOrganisatorEmail" class="form-label"
-                  >Email</label
+                <label for="inputEditEmail" class="form-label">Email</label>
+                <div class="invalid-feedback" id="emailEditInvalidFeedback">
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-md-6 form-floating">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputEditPhone"
+                  placeholder="telefon"
+                  required
+                  name="phone"
+                />
+                <label for="inputEditPhone" class="form-label">Telefon</label>
+                <div class="invalid-feedback" id="phoneEditInvalidFeedback">
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-md-6 form-floating">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="inputEditBirthday"
+                  placeholder="rodjendan"
+                  required
+                  name="birthday"
+                />
+                <label for="inputEditBirthday" class="form-label"
+                  >Datum Rodjenja</label
                 >
-                <div
-                  class="invalid-feedback"
-                  id="emailOrganisatorInvalidFeedback"
-                >
+                <div class="invalid-feedback">Obavezno polje!</div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputEditAddress"
+                  placeholder="adresa"
+                  required
+                  name="address"
+                />
+                <label for="inputEditAddress" class="form-label">Adresa</label>
+                <div class="invalid-feedback" id="addressEditInvalidFeedback">
                   Obavezno polje!
                 </div>
               </div>
@@ -525,20 +575,15 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="inputOrganisatorAddress"
-                  placeholder="adresa"
+                  id="inputEditEducation"
+                  placeholder="zanimanje"
                   required
-                  name="address"
+                  name="education"
                 />
-                <label for="inputOrganisatorAddress" class="form-label"
-                  >Adresa</label
+                <label for="inputEditEducation" class="form-label"
+                  >Zanimanje</label
                 >
-                <div
-                  class="invalid-feedback"
-                  id="adressOrganisatorInvalidFeedback"
-                >
-                  Obavezno polje!
-                </div>
+                <div class="invalid-feedback">Obavezno polje!</div>
               </div>
 
               <div class="col d-flex justify-content-between">
@@ -549,11 +594,7 @@
                 >
                   Odustani
                 </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  id="EditOrganisatorButton"
-                >
+                <button type="submit" class="btn btn-primary" id="EditButton">
                   Izmeni
                 </button>
               </div>
@@ -563,13 +604,13 @@
       </div>
     </div>
 
-    <!-- Alert Organisator Edit-->
+    <!-- Alert Edit-->
     <div
       class="fixed alert alert-success alert-dismissible fade"
-      id="alertSuccessfullOrganisatorEdit"
+      id="alertSuccessfullEdit"
       role="alert"
     >
-      <strong>Uspešno ste izmenili podatke organizatora!</strong>
+      <strong>Uspešno ste izmenili korisničke podatke!</strong>
       <button
         type="button"
         class="btn-close"
@@ -578,223 +619,6 @@
       ></button>
     </div>
 
-    <!-- Add Festival Modal -->
-    <div
-      class="modal fade"
-      id="AddFestivalModal"
-      tabindex="-1"
-      aria-labelledby="AddFestivalModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header btn-pink">
-            <h3 class="modal-title text-light" id="AddFestivalModalLabel">
-              Izmena Podataka Organizatora
-            </h3>
-          </div>
-          <div class="modal-body">
-            <form
-              class="row g-3 row-cols-1 row-cols-xl-2 d-flex justify-content-center align-items-center"
-              id="AddFestivalForm"
-              novalidate
-            >
-              <div class="col-12 form-floating">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputFestivalName"
-                  placeholder="festival"
-                  required
-                  name="name"
-                />
-                <label for="inputFestivalName" class="form-label"
-                  >Festival</label
-                >
-                <div class="invalid-feedback">Obavezno polje!</div>
-              </div>
-
-              <div class="col-12 form-floating">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="inputFestivalPrice"
-                  placeholder="cena"
-                  required
-                  name="price"
-                />
-                <label for="inputFestivalPrice" class="form-label">Cena</label>
-                <div class="invalid-feedback" id="priceFestivalInvalidFeedback">
-                  Obavezno polje!
-                </div>
-              </div>
-
-              <div class="col-12 form-floating">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="inputFestivalMaxPeople"
-                  placeholder="maxPeople"
-                  required
-                  name="maxPeople"
-                />
-                <label for="inputFestivalMaxPeople" class="form-label"
-                  >Max Osoba</label
-                >
-                <div class="invalid-feedback">Obavezno polje!</div>
-              </div>
-
-              <div class="col-12 form-floating">
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="inputFestivalPictures"
-                  placeholder="slike"
-                  required
-                  name="pictures"
-                ></textarea>
-                <label for="inputFestivalPictures" class="form-label"
-                  >Linkovi Slika</label
-                >
-                <div
-                  class="invalid-feedback"
-                  id="picturesFestivalInvalidFeedback"
-                >
-                  Obavezno polje!
-                </div>
-              </div>
-
-              <div class="col-12 form-floating">
-                <textarea
-                  type="text"
-                  class="form-control"
-                  id="inputFestivalDescription"
-                  placeholder="description"
-                  required
-                  name="description"
-                ></textarea>
-                <label for="inputFestivalDescription" class="form-label"
-                  >Opis</label
-                >
-                <div
-                  class="invalid-feedback"
-                  id="DescriptionFestivalInvalidFeedback"
-                >
-                  Obavezno polje!
-                </div>
-              </div>
-
-              <div class="col-12">
-                <label for="dropdownFestivalType">Tip</label>
-                <select class="form-control" id="dropdownFestivalType">
-                  <option selected value="Muzički">Muzički</option>
-                  <option value="Umetnički">Umetnički</option>
-                  <option value="Filmski">Filmski</option>
-                  <option value="Gastronomski">Gastronomski</option>
-                  <option value="Edukativni">Edukativni</option>
-                </select>
-              </div>
-
-              <div class="col-12">
-                <label for="dropdownFestivalTravelType">Prevoz</label>
-                <select class="form-control" id="dropdownFestivalTravelType">
-                  <option value="Sopstveni" selected>Sopstveni</option>
-                  <option value="Avion">Avion</option>
-                  <option value="Autobus">Autobus</option>
-                </select>
-              </div>
-
-              <div class="col d-flex justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Odustani
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  id="AddFestivalButton"
-                >
-                  Dodaj
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Alert Festival Adding -->
-    <div
-      class="fixed alert alert-success alert-dismissible fade"
-      id="alertSuccessfullFestivalAdd"
-      role="alert"
-    >
-      <strong>Uspešno ste dodali festival!</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="close"
-      ></button>
-    </div>
-
-    <!-- Delete Festival Modal -->
-    <div
-      class="modal fade"
-      id="deleteFestivalModal"
-      tabindex="-1"
-      aria-labelledby="deleteFestivalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header danger bg-danger">
-            <h3 class="modal-title text-light" id="deleteFestivalLabel">
-              Brisanje Festivala
-            </h3>
-          </div>
-          <div class="modal-body">
-            <form id="deleteFestivalForm">
-              <div class="mb-3">
-                <h5 class="text-muted">Odaberite festival za brisanje:</h5>
-                <hr />
-              </div>
-              <div id="deleteFestivalOptionsContainer"></div>
-              <div class="col d-flex justify-content-between mt-3">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Odustani
-                </button>
-                <button type="submit" class="btn btn-danger" id="saveChanges">
-                  Obriši
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Alert Festival Deletion -->
-    <div
-      class="fixed alert alert-success alert-dismissible fade"
-      id="alertSuccessfullFestivalDeletion"
-      role="alert"
-    >
-      <strong>Uspešno ste obrisali festival!</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="close"
-      ></button>
-    </div>
     <!-- Footer -->
     <section id="footer">
       <footer class="text-center bg-dark text-light">
@@ -847,6 +671,6 @@
         </div>
       </footer>
     </section>
-    <script src="../js/fest_panel.js"></script>
+    <script src="../js/user-panel.js"></script>
   </body>
 </html>

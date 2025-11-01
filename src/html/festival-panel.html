@@ -23,17 +23,17 @@
       href="https://fonts.googleapis.com/css2?family=Seymour+One&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../../public/css/style.css" />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
       defer
     ></script>
-    <link rel="stylesheet" href="../../public/css/style.css" />
-    <script src="../js/login_register.js" defer></script>
+    <script src="../js/authentication.js" defer></script>
   </head>
 
-  <body>
+  <body class="main-field">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md sticky-top bg-dark">
       <div class="container-fluid py-2">
@@ -42,9 +42,9 @@
           <img src="../../public/img/vu_fest_logo.png" width="50" />
           <span>
             <strong>
-              <span class="pink-colour webname">Vu</span
-              ><span class="orange-colour webname">Events</span
-              ><span class="blue-colour webname">Org</span>
+              <span class="pink-color webname">Vu</span
+              ><span class="orange-color webname">Events</span
+              ><span class="blue-color webname">Org</span>
             </strong>
           </span>
         </a>
@@ -94,7 +94,7 @@
             </li>
             <li class="" id="liRegisterButton">
               <button
-                class="btn btn-bublue m-md-0 mt-2 me-2"
+                class="btn btn-blue m-md-0 mt-2 me-2"
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#RegisterUserModal"
@@ -125,7 +125,7 @@
     >
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header btn-bublue">
+          <div class="modal-header btn-blue">
             <h3 class="modal-title text-light" id="RegisterUserModalLabel">
               Registracija Korisnika
             </h3>
@@ -400,210 +400,401 @@
       ></button>
     </div>
 
-    <!-- Organisator's Info -->
-    <section class="text-dark text-start p-4 glavno-polje" id="org-info">
-      <div class="container-fluid">
-        <div
-          class="row g-4 row-cols-1 row-cols-lg-2 d-flex justify-content-center align-items-center"
-        >
-          <div class="col">
-            <div class="bg-light rounded-3 p-4">
-              <ul class="list-group list-group-flush lead">
-                <li class="list-inline-item">
-                  <span class="fw-bolder">Organizator:</span><br />
-                  <h1 class="fw-bold" id="organisatorName"></h1>
-                </li>
-
-                <hr class="my-1" />
-
-                <li
-                  class="list-inline-item d-flex align-items-center justify-content-start"
-                >
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="2em"
-                      fill="currentColor"
-                      class="bi bi-house pe-2"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="ms-2">
-                    <span class="fw-bolder">Adresa:</span><br />
-                    <h5 class="fw-bold" id="organisatorAdress"></h5>
-                  </div>
-                </li>
-
-                <hr class="my-1" />
-
-                <li
-                  class="list-inline-item d-flex align-items-center justify-content-start"
-                >
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="2em"
-                      fill="currentColor"
-                      class="bi bi-calendar pe-2"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="ms-2">
-                    <span class="fw-bolder">Godina osnivanja:</span><br />
-                    <h5 class="fw-bold" id="organisatorFoundingYear"></h5>
-                  </div>
-                </li>
-
-                <hr class="my-1" />
-
-                <li
-                  class="list-inline-item d-flex align-items-center justify-content-start"
-                >
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="2em"
-                      fill="currentColor"
-                      class="bi bi-telephone pe-2"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="ms-2">
-                    <span class="fw-bolder">Kontakt telefon:</span><br />
-                    <h5 class="fw-bold" id="organisatorPhone"></h5>
-                  </div>
-                </li>
-
-                <hr class="my-1" />
-
-                <li
-                  class="list-inline-item d-flex align-items-center justify-content-start"
-                >
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="2em"
-                      fill="currentColor"
-                      class="bi bi-envelope pe-2"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="ms-2">
-                    <span class="fw-bolder">Email:</span><br />
-                    <h5 class="fw-bold" id="organisatorEmail"></h5>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="bg-light rounded-3 p-1 ratio ratio-4x3">
-              <img
-                id="organisatorLogo"
-                src=""
-                class="w-100 h-100 rounded-3 p-1"
-                style="object-fit: cover"
-              />
-            </div>
-          </div>
-        </div>
+    <!-- About User Table  -->
+    <section style="text-align: center">
+      <div
+        class="bg-secondary text-light p-3 py-2 my-4 rounded-3"
+        style="display: inline-block"
+      >
+        <h1><b>Svi organizatori:</b></h1>
       </div>
     </section>
 
-    <!-- Search festival cards -->
-    <section
-      class="search d-flex justify-content-center align-items-center"
-      id="fest-search"
+    <!-- Users Table -->
+    <section id="org-info">
+      <div class="table-responsive bg-light mx-5 mb-5 rounded-3">
+        <table id="organizersTable" class="table table-striped bg-light">
+          <thead>
+            <tr>
+              <th>Organizator</th>
+              <th>Adresa</th>
+              <th>Godina Osnivanja</th>
+              <th>Telefon</th>
+              <th>Email</th>
+              <th>...</th>
+            </tr>
+          </thead>
+          <tbody id="organizersTableData"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Edit Organizer Modal -->
+    <div
+      class="modal fade"
+      id="EditOrganizerModal"
+      tabindex="-1"
+      aria-labelledby="EditOrganizerModalLabel"
+      aria-hidden="true"
     >
-      <div class="container-fluid">
-        <div class="row p-4 mb-4">
-          <div class="col-12 col-md-9 col-lg-9 col-xl-7 row-cols-1 mx-auto">
-            <div class="input-group mb-3" id="searchForm">
-              <span
-                class="input-group-text btn-pink text-light"
-                id="basic-addon1"
-                >Vrsta:</span
-              >
-              <select class="form-control" id="dropdownFestivalType">
-                <option selected value="Svi">Svi</option>
-                <hr class="dropdown-divider" />
-                <option value="Muzički">Muzički</option>
-                <option value="Umetnički">Umetnički</option>
-                <option value="Filmski">Filmski</option>
-                <option value="Gastronomski">Gastronomski</option>
-                <option value="Edukativni">Edukativni</option>
-              </select>
-              <input
-                id="FestSearchInput"
-                class="form-control"
-                type="search"
-                placeholder="Ime festivala..."
-              />
-              <button
-                class="btn btn-pink"
-                type="button"
-                id="FestivalButtonSearch"
-              >
-                Search
-              </button>
-            </div>
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header btn-orange">
+            <h3 class="modal-title text-light" id="EditOrganizerModalLabel">
+              Izmena Podataka Organizatora
+            </h3>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Festival cards -->
-    <section id="festivali" class="text-dark">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col text-center">
-            <h2><strong>Festivali ovog organizatora:</strong></h2>
-          </div>
-        </div>
-
-        <div
-          class="row row-cols-1 row-cols-md-2 row-cols-xl-3 m-5"
-          id="festivalRow"
-        >
-          <!-- <div class="col mb-4">
-            <div class="card border-4 rounded-3">
-              <a href="festival.html">
-                <div class="ratio ratio-16x9">
-                  <img
-                    class="card-img-top w-100 border-bottom-thick-pink"
-                    src="https://i.imgur.com/nIhAjPQ.jpeg"
-                  />
-                </div>
-                <div
-                  class="p-3 fw-normal text-center d-flex align-items-center justify-content-center"
-                  style="min-height: 100px"
+          <div class="modal-body">
+            <img id="logoPreview" src="" class="w-100 rounded-3 mb-3" />
+            <form
+              class="row g-3 row-cols-1 row-cols-xl-2 d-flex justify-content-center align-items-center"
+              id="editOrganizerForm"
+              novalidate
+            >
+              <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputOrganizerName"
+                  placeholder="organizator"
+                  required
+                  name="name"
+                />
+                <label for="inputOrganizerName" class="form-label"
+                  >Organizator</label
                 >
-                  <h4>${festival.naziv}</h4>
+                <div class="invalid-feedback">Obavezno polje!</div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputOrganizerYear"
+                  placeholder="godina"
+                  required
+                  name="year"
+                />
+                <label for="inputOrganizerYear" class="form-label"
+                  >Godina Osnivanja</label
+                >
+                <div class="invalid-feedback">Obavezno polje!</div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputOrganizerPhone"
+                  placeholder="telefon"
+                  required
+                  name="phone"
+                />
+                <label for="inputOrganizerPhone" class="form-label"
+                  >Telefon</label
+                >
+                <div
+                  class="invalid-feedback"
+                  id="phoneOrganizerInvalidFeedback"
+                >
+                  Obavezno polje!
                 </div>
-              </a>
-            </div>
-          </div> -->
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="inputOrganizerEmail"
+                  placeholder="email"
+                  required
+                  name="email"
+                />
+                <label for="inputOrganizerEmail" class="form-label"
+                  >Email</label
+                >
+                <div
+                  class="invalid-feedback"
+                  id="emailOrganizerInvalidFeedback"
+                >
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputOrganizerAddress"
+                  placeholder="adresa"
+                  required
+                  name="address"
+                />
+                <label for="inputOrganizerAddress" class="form-label"
+                  >Adresa</label
+                >
+                <div
+                  class="invalid-feedback"
+                  id="addressOrganizerInvalidFeedback"
+                >
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Odustani
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="EditOrganizerButton"
+                >
+                  Izmeni
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
 
+    <!-- Alert Organizer Edit-->
+    <div
+      class="fixed alert alert-success alert-dismissible fade"
+      id="alertSuccessfullOrganizerEdit"
+      role="alert"
+    >
+      <strong>Uspešno ste izmenili podatke organizatora!</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="close"
+      ></button>
+    </div>
+
+    <!-- Add Festival Modal -->
+    <div
+      class="modal fade"
+      id="AddFestivalModal"
+      tabindex="-1"
+      aria-labelledby="AddFestivalModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header btn-pink">
+            <h3 class="modal-title text-light" id="AddFestivalModalLabel">
+              Izmena Podataka Organizatora
+            </h3>
+          </div>
+          <div class="modal-body">
+            <form
+              class="row g-3 row-cols-1 row-cols-xl-2 d-flex justify-content-center align-items-center"
+              id="AddFestivalForm"
+              novalidate
+            >
+              <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputFestivalName"
+                  placeholder="festival"
+                  required
+                  name="name"
+                />
+                <label for="inputFestivalName" class="form-label"
+                  >Festival</label
+                >
+                <div class="invalid-feedback">Obavezno polje!</div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputFestivalPrice"
+                  placeholder="cena"
+                  required
+                  name="price"
+                />
+                <label for="inputFestivalPrice" class="form-label">Cena</label>
+                <div class="invalid-feedback" id="priceFestivalInvalidFeedback">
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputFestivalMaxPeople"
+                  placeholder="maxPeople"
+                  required
+                  name="maxPeople"
+                />
+                <label for="inputFestivalMaxPeople" class="form-label"
+                  >Max Osoba</label
+                >
+                <div class="invalid-feedback">Obavezno polje!</div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="inputFestivalPictures"
+                  placeholder="slike"
+                  required
+                  name="pictures"
+                ></textarea>
+                <label for="inputFestivalPictures" class="form-label"
+                  >Linkovi Slika</label
+                >
+                <div
+                  class="invalid-feedback"
+                  id="picturesFestivalInvalidFeedback"
+                >
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-12 form-floating">
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="inputFestivalDescription"
+                  placeholder="description"
+                  required
+                  name="description"
+                ></textarea>
+                <label for="inputFestivalDescription" class="form-label"
+                  >Opis</label
+                >
+                <div
+                  class="invalid-feedback"
+                  id="DescriptionFestivalInvalidFeedback"
+                >
+                  Obavezno polje!
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="dropdownFestivalType">Tip</label>
+                <select class="form-control" id="dropdownFestivalType">
+                  <option selected value="Muzički">Muzički</option>
+                  <option value="Umetnički">Umetnički</option>
+                  <option value="Filmski">Filmski</option>
+                  <option value="Gastronomski">Gastronomski</option>
+                  <option value="Edukativni">Edukativni</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label for="dropdownFestivalTravelType">Prevoz</label>
+                <select class="form-control" id="dropdownFestivalTravelType">
+                  <option value="Sopstveni" selected>Sopstveni</option>
+                  <option value="Avion">Avion</option>
+                  <option value="Autobus">Autobus</option>
+                </select>
+              </div>
+
+              <div class="col d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Odustani
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="AddFestivalButton"
+                >
+                  Dodaj
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Festival Adding -->
+    <div
+      class="fixed alert alert-success alert-dismissible fade"
+      id="alertSuccessfullFestivalAdd"
+      role="alert"
+    >
+      <strong>Uspešno ste dodali festival!</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="close"
+      ></button>
+    </div>
+
+    <!-- Delete Festival Modal -->
+    <div
+      class="modal fade"
+      id="deleteFestivalModal"
+      tabindex="-1"
+      aria-labelledby="deleteFestivalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header danger bg-danger">
+            <h3 class="modal-title text-light" id="deleteFestivalLabel">
+              Brisanje Festivala
+            </h3>
+          </div>
+          <div class="modal-body">
+            <form id="deleteFestivalForm">
+              <div class="mb-3">
+                <h5 class="text-muted">Odaberite festival za brisanje:</h5>
+                <hr />
+              </div>
+              <div id="deleteFestivalOptionsContainer"></div>
+              <div class="col d-flex justify-content-between mt-3">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Odustani
+                </button>
+                <button type="submit" class="btn btn-danger" id="saveChanges">
+                  Obriši
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Festival Deletion -->
+    <div
+      class="fixed alert alert-success alert-dismissible fade"
+      id="alertSuccessfullFestivalDeletion"
+      role="alert"
+    >
+      <strong>Uspešno ste obrisali festival!</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="close"
+      ></button>
+    </div>
     <!-- Footer -->
     <section id="footer">
       <footer class="text-center bg-dark text-light">
@@ -656,6 +847,6 @@
         </div>
       </footer>
     </section>
-    <script src="../js/organisator.js"></script>
+    <script src="../js/festival-panel.js"></script>
   </body>
 </html>

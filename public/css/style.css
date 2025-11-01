@@ -13,15 +13,15 @@ body {
   background-image: url("https://img.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg");
 }
 
-.pink-colour {
+.pink-color {
   color: rgb(204, 46, 120);
 }
 
-.orange-colour {
+.orange-color {
   color: rgb(242, 129, 49);
 }
 
-.blue-colour {
+.blue-color {
   color: rgb(2, 160, 224);
 }
 
@@ -38,7 +38,7 @@ body {
 }
 
 .btn-pink:focus,
-#FestSearchInput:focus {
+#festivalSearchInput:focus {
   box-shadow: 0 0 10px 5px rgb(204, 46, 120);
 }
 
@@ -47,15 +47,15 @@ body {
 }
 
 .btn-orange:focus,
-#OrgSearchInput:focus {
+#organizerSearchInput:focus {
   box-shadow: 0 0 10px 5px rgb(242, 129, 49);
 }
 
-.btn-bublue {
+.btn-blue {
   background-color: rgb(2, 160, 224);
 }
 
-.btn-bublue:focus {
+.btn-blue:focus {
   box-shadow: 0 0 10px 5px rgb(2, 160, 224);
 }
 
@@ -68,7 +68,7 @@ body {
   box-shadow: 0 0 0 0.2rem rgb(204, 46, 120);
 }
 
-.glavno-polje {
+.main-field {
   background: linear-gradient(
     rgb(204, 46, 120),
     rgb(242, 129, 49),
@@ -85,19 +85,19 @@ body {
   color: inherit;
 }
 
-#organizatori .card {
+#organizers .card {
   border-color: rgb(242, 129, 49);
 }
 
-#organizatori .card a:hover {
+#organizers .card a:hover {
   box-shadow: 0 0 10px 5px rgb(242, 129, 49);
 }
 
-#festivali .card {
+#festivals .card {
   border-color: rgb(204, 46, 120);
 }
 
-#festivali .card a:hover {
+#festivals .card a:hover {
   box-shadow: 0 0 10px 5px rgb(204, 46, 120);
 }
 

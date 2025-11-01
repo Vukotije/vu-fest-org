@@ -1,42 +1,42 @@
 const fireBaseUrl = "https://wd-sv-67-2023-default-rtdb.firebaseio.com/";
-const organisatorId = getOrganisatorId();
-const organisatorName = document.getElementById("organisatorName");
-const organisatorAdress = document.getElementById("organisatorAdress");
-const organisatorFoundingYear = document.getElementById(
-  "organisatorFoundingYear"
+const organizerId = getOrganizerId();
+const organizerName = document.getElementById("organizerName");
+const organizerAddress = document.getElementById("organizerAddress");
+const organizerFoundingYear = document.getElementById(
+  "organizerFoundingYear"
 );
-const organisatorPhone = document.getElementById("organisatorPhone");
-const organisatorEmail = document.getElementById("organisatorEmail");
-const organisatorLogo = document.getElementById("organisatorLogo");
+const organizerPhone = document.getElementById("organizerPhone");
+const organizerEmail = document.getElementById("organizerEmail");
+const organizerLogo = document.getElementById("organizerLogo");
 
 let festivalsCode;
-const searchButton = document.getElementById("FestivalButtonSearch");
+const searchButton = document.getElementById("festivalButtonSearch");
 
-getOrganisatorsInfo();
+getOrganizerInfo();
 
 searchButton.addEventListener("click", () => searchFestivals(festivalsCode));
 
-function getOrganisatorId() {
+function getOrganizerId() {
   let params = new URLSearchParams(window.location.search);
-  let organisatorId = params.get("organisatorId");
-  return organisatorId;
+  let organizerId = params.get("organizerId");
+  return organizerId;
 }
 
-function getOrganisatorsInfo() {
+function getOrganizerInfo() {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        let organisator = JSON.parse(request.responseText);
+        let organizer = JSON.parse(request.responseText);
 
-        organisatorName.innerHTML = organisator.naziv;
-        organisatorAdress.innerHTML = organisator.adresa;
-        organisatorFoundingYear.innerHTML = organisator.godinaOsnivanja;
-        organisatorPhone.innerHTML = organisator.kontaktTelefon;
-        organisatorEmail.innerHTML = organisator.email;
-        organisatorLogo.src = organisator.logo;
-        festivalsCode = organisator.festivali;
-        getAllOrganisatorsFestivals(festivalsCode);
+        organizerName.innerHTML = organizer.naziv;
+        organizerAddress.innerHTML = organizer.adresa;
+        organizerFoundingYear.innerHTML = organizer.godinaOsnivanja;
+        organizerPhone.innerHTML = organizer.kontaktTelefon;
+        organizerEmail.innerHTML = organizer.email;
+        organizerLogo.src = organizer.logo;
+        festivalsCode = organizer.festivali;
+        getAllOrganizerFestivals(festivalsCode);
       } else {
         window.location.href = "greska.html?error=" + this.status;
       }
@@ -44,7 +44,7 @@ function getOrganisatorsInfo() {
   };
   request.open(
     "GET",
-    `${fireBaseUrl}/organizatoriFestivala/${organisatorId}.json`
+    `${fireBaseUrl}/organizatoriFestivala/${organizerId}.json`
   );
   request.send();
 }
@@ -69,7 +69,7 @@ function getOrganisatorsInfo() {
 
 const festivalRow = document.getElementById("festivalRow");
 
-function getAllOrganisatorsFestivals(festivalsCode) {
+function getAllOrganizerFestivals(festivalsCode) {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
@@ -109,8 +109,8 @@ function getAllOrganisatorsFestivals(festivalsCode) {
 }
 
 function searchFestivals(festivalsCode) {
-  let FestivalType = document.getElementById("dropdownFestivalType").value;
-  let FestivalName = document.getElementById("FestSearchInput").value;
+  let festivalType = document.getElementById("dropdownFestivalType").value;
+  let festivalName = document.getElementById("festivalSearchInput").value;
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
@@ -120,12 +120,12 @@ function searchFestivals(festivalsCode) {
 
         for (let id in festivals) {
           let festival = festivals[id];
-          if (FestivalType === "Svi") {
-            FestivalType = festival.tip;
+          if (festivalType === "Svi") {
+            festivalType = festival.tip;
           }
           if (
-            festival.naziv.toLowerCase().includes(FestivalName.toLowerCase()) &&
-            festival.tip === FestivalType
+            festival.naziv.toLowerCase().includes(festivalName.toLowerCase()) &&
+            festival.tip === festivalType
           ) {
             festivalRow.innerHTML += `
             <div class="col mb-4">

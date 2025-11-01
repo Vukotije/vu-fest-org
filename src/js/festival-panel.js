@@ -1,25 +1,25 @@
 const fireBaseUrl = "https://wd-sv-67-2023-default-rtdb.firebaseio.com/";
-const organisatorsTableData = document.getElementById("organisatorsTableData");
+const organizersTableData = document.getElementById("organizersTableData");
 
-getOrganisatorsTableData();
+getOrganizersTableData();
 
-function getOrganisatorsTableData() {
+function getOrganizersTableData() {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        let organisators = JSON.parse(request.responseText);
-        organisatorsTableData.innerHTML = "";
+        let organizers = JSON.parse(request.responseText);
+        organizersTableData.innerHTML = "";
 
-        for (let id in organisators) {
-          let organisator = organisators[id];
-          organisatorsTableData.innerHTML += `
+        for (let id in organizers) {
+          let organizer = organizers[id];
+          organizersTableData.innerHTML += `
             <tr>
-                <td>${organisator.naziv}</td>
-                <td>${organisator.adresa}</td>
-                <td>${organisator.godinaOsnivanja}</td>
-                <td>${organisator.kontaktTelefon}</td>
-                <td>${organisator.email}</td>
+                <td>${organizer.naziv}</td>
+                <td>${organizer.adresa}</td>
+                <td>${organizer.godinaOsnivanja}</td>
+                <td>${organizer.kontaktTelefon}</td>
+                <td>${organizer.email}</td>
                 <td>
                     <div class="dropdown">
                         <button
@@ -28,8 +28,8 @@ function getOrganisatorsTableData() {
                             id="dropdownMenuButton"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
-                            data-organisator-id="${id}"
-                            data-festivals="${organisator.festivali}"
+                            data-organizer-id="${id}"
+                            data-festivals="${organizer.festivali}"
                         >
                             <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -52,15 +52,15 @@ function getOrganisatorsTableData() {
                         >
                             <li>
                                 <a
-                                    class="dropdown-item text-dark editOrganisator"
+                                    class="dropdown-item text-dark editOrganizer"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#EditOrganisatorModal"
+                                    data-bs-target="#EditOrganizerModal"
                                     href="#"
                                     >Izmeni organizatora</a
                                 >
                             </li>
                             <li>
-                                <a class="dropdown-item text-danger deleteOrganisator" href="#">Obriši organizatora</a>
+                                <a class="dropdown-item text-danger deleteOrganizer" href="#">Obriši organizatora</a>
                             </li>
                             <li>
                                 <a
@@ -87,22 +87,22 @@ function getOrganisatorsTableData() {
 
           document.querySelectorAll(".dropdown-toggle").forEach((button) => {
             button.addEventListener("click", function () {
-              let organisatorId = this.getAttribute("data-organisator-id");
+              let organizerId = this.getAttribute("data-organizer-id");
 
               let festivals = this.getAttribute("data-festivals");
 
-              let deleteOrganisatorLink =
-                this.nextElementSibling.querySelector(".deleteOrganisator");
-              deleteOrganisatorLink.addEventListener("click", function (event) {
+              let deleteOrganizerLink =
+                this.nextElementSibling.querySelector(".deleteOrganizer");
+              deleteOrganizerLink.addEventListener("click", function (event) {
                 event.preventDefault();
-                deleteOrganisator(organisatorId);
+                deleteOrganizer(organizerId);
               });
 
-              let editOrganisatorLink =
-                this.nextElementSibling.querySelector(".editOrganisator");
-              editOrganisatorLink.addEventListener("click", function (event) {
+              let editOrganizerLink =
+                this.nextElementSibling.querySelector(".editOrganizer");
+              editOrganizerLink.addEventListener("click", function (event) {
                 event.preventDefault();
-                editOrganisator(organisatorId);
+                editOrganizer(organizerId);
               });
 
               let deleteFestivalLink =
@@ -130,14 +130,14 @@ function getOrganisatorsTableData() {
   request.send();
 }
 
-// Delete Organisator function
-function deleteOrganisator(organisatorId) {
+// Delete Organizer function
+function deleteOrganizer(organizerId) {
   if (confirm("Da li ste sigurni da želite da obrišete organizatora?")) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (this.status == 200) {
-          getOrganisatorsTableData();
+          getOrganizersTableData();
         } else {
           window.location.href = "greska.html?error=" + this.status;
         }
@@ -145,62 +145,62 @@ function deleteOrganisator(organisatorId) {
     };
     request.open(
       "DELETE",
-      `${fireBaseUrl}/organizatoriFestivala/${organisatorId}.json`
+      `${fireBaseUrl}/organizatoriFestivala/${organizerId}.json`
     );
     request.send();
   }
 }
 
-// Edit Organisator function
-function editOrganisator(organisatorId) {
+// Edit Organizer function
+function editOrganizer(organizerId) {
   // Forma za edit
-  const editOrganisatorForm = document.getElementById("editOrganisatorForm");
+  const editOrganizerForm = document.getElementById("editOrganizerForm");
 
   // Input polja
-  const inputOrganisatorName = document.getElementById("inputOrganisatorName");
-  const inputOrganisatorYear = document.getElementById("inputOrganisatorYear");
-  const inputOrganisatorPhone = document.getElementById(
-    "inputOrganisatorPhone"
+  const inputOrganizerName = document.getElementById("inputOrganizerName");
+  const inputOrganizerYear = document.getElementById("inputOrganizerYear");
+  const inputOrganizerPhone = document.getElementById(
+    "inputOrganizerPhone"
   );
-  const inputOrganisatorEmail = document.getElementById(
-    "inputOrganisatorEmail"
+  const inputOrganizerEmail = document.getElementById(
+    "inputOrganizerEmail"
   );
-  const inputOrganisatorAddress = document.getElementById(
-    "inputOrganisatorAddress"
+  const inputOrganizerAddress = document.getElementById(
+    "inputOrganizerAddress"
   );
   const logoPreview = document.getElementById("logoPreview");
 
   // Dugme za edit
-  const EditButton = document.getElementById("EditOrganisatorButton");
+  const editButton = document.getElementById("EditOrganizerButton");
 
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        let organisator_data = JSON.parse(request.responseText);
+        let organizer_data = JSON.parse(request.responseText);
 
-        inputOrganisatorName.value = organisator_data.naziv;
-        inputOrganisatorYear.value = organisator_data.godinaOsnivanja;
-        inputOrganisatorPhone.value = organisator_data.kontaktTelefon;
-        inputOrganisatorEmail.value = organisator_data.email;
-        inputOrganisatorAddress.value = organisator_data.adresa;
+        inputOrganizerName.value = organizer_data.naziv;
+        inputOrganizerYear.value = organizer_data.godinaOsnivanja;
+        inputOrganizerPhone.value = organizer_data.kontaktTelefon;
+        inputOrganizerEmail.value = organizer_data.email;
+        inputOrganizerAddress.value = organizer_data.adresa;
 
-        logo = organisator_data.logo;
+        logo = organizer_data.logo;
         logoPreview.src = logo;
 
-        festivali = organisator_data.festivali;
+        festivals = organizer_data.festivali;
 
         editValidateAndSend(
-          organisatorId,
-          editOrganisatorForm,
-          inputOrganisatorName,
-          inputOrganisatorYear,
-          inputOrganisatorPhone,
-          inputOrganisatorEmail,
-          inputOrganisatorAddress,
-          EditButton,
+          organizerId,
+          editOrganizerForm,
+          inputOrganizerName,
+          inputOrganizerYear,
+          inputOrganizerPhone,
+          inputOrganizerEmail,
+          inputOrganizerAddress,
+          editButton,
           logo,
-          festivali
+          festivals
         );
       } else {
         window.location.href = "greska.html?error=" + this.status;
@@ -209,47 +209,47 @@ function editOrganisator(organisatorId) {
   };
   request.open(
     "GET",
-    `${fireBaseUrl}/organizatoriFestivala/${organisatorId}.json`
+    `${fireBaseUrl}/organizatoriFestivala/${organizerId}.json`
   );
   request.send();
 }
 
 function editValidateAndSend(
-  organisatorId,
-  editOrganisatorForm,
-  inputOrganisatorName,
-  inputOrganisatorYear,
-  inputOrganisatorPhone,
-  inputOrganisatorEmail,
-  inputOrganisatorAddress,
-  EditButton,
+  organizerId,
+  editOrganizerForm,
+  inputOrganizerName,
+  inputOrganizerYear,
+  inputOrganizerPhone,
+  inputOrganizerEmail,
+  inputOrganizerAddress,
+  editButton,
   logo,
-  festivali
+  festivals
 ) {
-  EditButton.addEventListener("click", function () {
-    clearEditOrganisatorInputFields();
+  editButton.addEventListener("click", function () {
+    clearEditOrganizerInputFields();
   });
 
-  editOrganisatorForm.addEventListener("submit", function (e) {
+  editOrganizerForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    clearEditOrganisatorInputFields();
+    clearEditOrganizerInputFields();
 
     // Vrednosti input polja
-    const name = inputOrganisatorName.value.trim();
-    const year = inputOrganisatorYear.value.trim();
-    const phone = inputOrganisatorPhone.value.trim();
-    const email = inputOrganisatorEmail.value.trim();
-    const address = inputOrganisatorAddress.value.trim();
+    const name = inputOrganizerName.value.trim();
+    const year = inputOrganizerYear.value.trim();
+    const phone = inputOrganizerPhone.value.trim();
+    const email = inputOrganizerEmail.value.trim();
+    const address = inputOrganizerAddress.value.trim();
 
     // Feedack elementi
-    const emailOrganisatorInvalidFeedback = document.getElementById(
-      "emailOrganisatorInvalidFeedback"
+    const emailOrganizerInvalidFeedback = document.getElementById(
+      "emailOrganizerInvalidFeedback"
     );
-    const phonelOrganisatorInvalidFeedback = document.getElementById(
-      "phonelOrganisatorInvalidFeedback"
+    const phoneOrganizerInvalidFeedback = document.getElementById(
+      "phoneOrganizerInvalidFeedback"
     );
-    const adressOrganisatorInvalidFeedback = document.getElementById(
-      "adressOrganisatorInvalidFeedback"
+    const addressOrganizerInvalidFeedback = document.getElementById(
+      "addressOrganizerInvalidFeedback"
     );
 
     // Promenljiva koja oznacava da li treba ici na server
@@ -258,108 +258,108 @@ function editValidateAndSend(
     // Provera da li je sve uneto
     if (name === "") {
       goToServer = false;
-      inputOrganisatorName.classList.add("is-invalid");
+      inputOrganizerName.classList.add("is-invalid");
     } else {
-      inputOrganisatorName.classList.add("is-valid");
+      inputOrganizerName.classList.add("is-valid");
     }
     if (year === "") {
       goToServer = false;
-      inputOrganisatorYear.classList.add("is-invalid");
+      inputOrganizerYear.classList.add("is-invalid");
     } else {
-      inputOrganisatorYear.classList.add("is-valid");
+      inputOrganizerYear.classList.add("is-valid");
     }
     if (email === "") {
       goToServer = false;
-      inputOrganisatorEmail.classList.add("is-invalid");
+      inputOrganizerEmail.classList.add("is-invalid");
     }
     if (phone === "") {
       goToServer = false;
-      inputOrganisatorPhone.classList.add("is-invalid");
+      inputOrganizerPhone.classList.add("is-invalid");
     }
     if (address === "") {
       goToServer = false;
-      inputOrganisatorAddress.classList.add("is-invalid");
+      inputOrganizerAddress.classList.add("is-invalid");
     }
     if (goToServer) {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(email)) {
-        inputOrganisatorEmail.classList.add("is-invalid");
-        emailOrganisatorInvalidFeedback.innerHTML = "Email nije validan!";
+        inputOrganizerEmail.classList.add("is-invalid");
+        emailOrganizerInvalidFeedback.innerHTML = "Email nije validan!";
         goToServer = false;
       } else {
-        inputOrganisatorEmail.classList.add("is-valid");
+        inputOrganizerEmail.classList.add("is-valid");
       }
 
       const phoneRegex = /^\d{3}\/\d{3,4}-\d{3,4}$/;
 
       if (!phoneRegex.test(phone)) {
-        inputOrganisatorPhone.classList.add("is-invalid");
-        phonelOrganisatorInvalidFeedback.innerHTML =
+        inputOrganizerPhone.classList.add("is-invalid");
+        phoneOrganizerInvalidFeedback.innerHTML =
           "Broj telefona nije u formatu '(3cifre)/(3 ili 4 cifre)-(3 ili 4 cifre)'!";
         goToServer = false;
       } else {
-        inputOrganisatorPhone.classList.add("is-valid");
+        inputOrganizerPhone.classList.add("is-valid");
       }
       const addressRegex =
         /^[a-zA-Z\s0-9čćžšđČĆŽŠĐ]+,\s[a-zA-Z\sčćžšđČĆŽŠĐ]+,\s\d+$/;
       if (!addressRegex.test(address)) {
-        inputOrganisatorAddress.classList.add("is-invalid");
-        adressOrganisatorInvalidFeedback.innerHTML =
+        inputOrganizerAddress.classList.add("is-invalid");
+        addressOrganizerInvalidFeedback.innerHTML =
           "Adresa nije u formatu:<br/> 'ulica broj, mesto, ZIP kod'!";
         goToServer = false;
       } else {
-        inputOrganisatorAddress.classList.add("is-valid");
+        inputOrganizerAddress.classList.add("is-valid");
       }
 
       if (goToServer) {
-        let edited_organisator = {
+        let edited_organizer = {
           godinaOsnivanja: year,
           naziv: name,
           email: email,
           adresa: address,
           kontaktTelefon: phone,
-          festivali: festivali,
+          festivali: festivals,
           logo: logo,
         };
         let req = new XMLHttpRequest();
         req.open(
           "PUT",
-          `${fireBaseUrl}/organizatoriFestivala/${organisatorId}.json`
+          `${fireBaseUrl}/organizatoriFestivala/${organizerId}.json`
         );
-        req.send(JSON.stringify(edited_organisator));
+        req.send(JSON.stringify(edited_organizer));
 
-        let EditOrganisatorModal = document.getElementById(
-          "EditOrganisatorModal"
+        let EditOrganizerModal = document.getElementById(
+          "EditOrganizerModal"
         );
-        let modalInstance = bootstrap.Modal.getInstance(EditOrganisatorModal);
+        let modalInstance = bootstrap.Modal.getInstance(EditOrganizerModal);
         modalInstance.hide();
 
-        const alertSuccessfullOrganisatorEdit = document.getElementById(
-          "alertSuccessfullOrganisatorEdit"
+        const alertSuccessfullOrganizerEdit = document.getElementById(
+          "alertSuccessfullOrganizerEdit"
         );
-        alertSuccessfullOrganisatorEdit.classList.add("show");
-        setTimeout(getOrganisatorsTableData, 500);
+        alertSuccessfullOrganizerEdit.classList.add("show");
+        setTimeout(getOrganizersTableData, 500);
       }
     }
   });
 }
 
-function clearEditOrganisatorInputFields() {
-  let editOrganisatorForm = document.querySelector("#editOrganisatorForm");
+function clearEditOrganizerInputFields() {
+  let editOrganizerForm = document.querySelector("#editOrganizerForm");
 
-  inputOrganisatorName.classList.remove("is-valid");
-  inputOrganisatorYear.classList.remove("is-valid");
-  inputOrganisatorPhone.classList.remove("is-valid");
-  inputOrganisatorEmail.classList.remove("is-valid");
-  inputOrganisatorAddress.classList.remove("is-valid");
+  inputOrganizerName.classList.remove("is-valid");
+  inputOrganizerYear.classList.remove("is-valid");
+  inputOrganizerPhone.classList.remove("is-valid");
+  inputOrganizerEmail.classList.remove("is-valid");
+  inputOrganizerAddress.classList.remove("is-valid");
 
-  inputOrganisatorName.classList.remove("is-invalid");
-  inputOrganisatorYear.classList.remove("is-invalid");
-  inputOrganisatorPhone.classList.remove("is-invalid");
-  inputOrganisatorEmail.classList.remove("is-invalid");
-  inputOrganisatorAddress.classList.remove("is-invalid");
+  inputOrganizerName.classList.remove("is-invalid");
+  inputOrganizerYear.classList.remove("is-invalid");
+  inputOrganizerPhone.classList.remove("is-invalid");
+  inputOrganizerEmail.classList.remove("is-invalid");
+  inputOrganizerAddress.classList.remove("is-invalid");
 
-  editOrganisatorForm.classList.remove("was-validated");
+  editOrganizerForm.classList.remove("was-validated");
 }
 
 // Add Festival function
