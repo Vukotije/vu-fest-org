@@ -61,7 +61,8 @@ function getFestivalInfo() {
         festivalType.innerHTML = festival.tip;
         festivalTypeIconContainer.innerHTML = FESTIVAL_TYPES[festival.tip];
         festivalTransport.innerHTML = festival.prevoz;
-        festivalTransportIconContainer.innerHTML = TRANSPORT_TYPES[festival.prevoz];
+        festivalTransportIconContainer.innerHTML =
+          TRANSPORT_TYPES[festival.prevoz];
         festivalPrice.innerHTML = festival.cena;
         festivalMaxPersons.innerHTML = festival.maxOsoba;
         festivalDescription.innerHTML = festival.opis;
@@ -92,7 +93,8 @@ function getFestivalInfo() {
           activeStatus = "";
         }
       } else {
-        window.location.href = "error.html?error=" + this.status;
+        console.log("Firebase unavailable, using mock festival data");
+        useMockFestivalData();
       }
     }
   };
@@ -101,4 +103,38 @@ function getFestivalInfo() {
     `${fireBaseUrl}festivali/${festivalsId}/${festivalId}.json`
   );
   request.send();
+}
+
+function useMockFestivalData() {
+  const festivalsData =
+    mockData.festivali[festivalsId] ||
+    mockData.festivali["-MNVEu6iMr2EFlQO6TW60"];
+  const festival = festivalsData[festivalId] || Object.values(festivalsData)[0];
+
+  festivalName.innerHTML = festival.naziv;
+  festivalType.innerHTML = festival.tip;
+  festivalTypeIconContainer.innerHTML = FESTIVAL_TYPES[festival.tip];
+  festivalTransport.innerHTML = festival.prevoz;
+  festivalTransportIconContainer.innerHTML = TRANSPORT_TYPES[festival.prevoz];
+  festivalPrice.innerHTML = festival.cena;
+  festivalMaxPersons.innerHTML = festival.maxOsoba;
+  festivalDescription.innerHTML = festival.opis;
+
+  const festivalPictures = festival.slike;
+  const picturesCarouselContainer = document.getElementById(
+    "picturesCarouselContainer"
+  );
+  let activeStatus = "active";
+  for (let index in festivalPictures) {
+    let pictureLink = festivalPictures[index];
+    picturesCarouselContainer.innerHTML += `
+      <div class="carousel-item ${activeStatus} ratio ratio-4x3">
+          <img
+          src="${pictureLink}"
+          class="d-block w-100 rounded-3"
+          style="object-fit: cover; height: 100%"
+          />
+      </div>`;
+    activeStatus = "";
+  }
 }

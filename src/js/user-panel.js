@@ -4,16 +4,32 @@ const usersTableData = document.getElementById("usersTableData");
 getUsersTableData();
 
 function getUsersTableData() {
+  // Use mock data directly since Firebase is unavailable
+  console.log("Loading users from mock data");
+  displayUsersTable(mockData.korisnici);
+  return;
+
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
         let users = JSON.parse(request.responseText);
-        usersTableData.innerHTML = "";
+        displayUsersTable(users);
+      } else {
+        console.log("Firebase unavailable, using mock users data");
+        displayUsersTable(mockData.korisnici);
+      }
+    }
+  };
+  request.open("GET", `${fireBaseUrl}/korisnici.json`);
+  request.send();
+}
 
-        for (let id in users) {
-          let user = users[id];
-          usersTableData.innerHTML += `
+function displayUsersTable(users) {
+  usersTableData.innerHTML = "";
+  for (let id in users) {
+    let user = users[id];
+    usersTableData.innerHTML += `
             <tr>
                 <td>${user.korisnickoIme}</td>
                 <td>${user.lozinka}</td>
@@ -71,47 +87,46 @@ function getUsersTableData() {
                 </td>
             </tr>`;
 
-          document.querySelectorAll(".dropdown-toggle").forEach((button) => {
-            button.addEventListener("click", function () {
-              let userId = this.getAttribute("data-user-id");
+    document.querySelectorAll(".dropdown-toggle").forEach((button) => {
+      button.addEventListener("click", function () {
+        let userId = this.getAttribute("data-user-id");
 
-              let deleteUserLink =
-                this.nextElementSibling.querySelector(".text-danger");
+        let deleteUserLink =
+          this.nextElementSibling.querySelector(".text-danger");
 
-              deleteUserLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                deleteUser(userId);
-              });
+        deleteUserLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          deleteUser(userId);
+        });
 
-              let editUserLink =
-                this.nextElementSibling.querySelector(".text-dark");
+        let editUserLink = this.nextElementSibling.querySelector(".text-dark");
 
-              editUserLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                editUser(userId);
-              });
-            });
-          });
-        }
-      } else {
-        window.location.href = "greska.html?error=" + this.status;
-      }
-    }
-  };
-  request.open("GET", `${fireBaseUrl}/korisnici.json`);
-  request.send();
+        editUserLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          editUser(userId);
+        });
+      });
+    });
+  }
 }
 
 // Delete user function
 function deleteUser(userId) {
   if (confirm("Da li ste sigurni da želite da obrišete korisnika?")) {
+    console.log("Mock delete user:", userId);
+    // In real app, this would delete from Firebase
+    // For mock, just remove from mockData and refresh table
+    delete mockData.korisnici[userId];
+    getUsersTableData();
+    return;
+
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (this.status == 200) {
           getUsersTableData();
         } else {
-          window.location.href = "greska.html?error=" + this.status;
+          console.log("Firebase unavailable, mock delete functionality");
         }
       }
     };
@@ -170,7 +185,9 @@ function editUser(userId) {
           EditButton
         );
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        console.log(
+          "Firebase unavailable, mock data functionality not implemented for this feature"
+        );
       }
     }
   };

@@ -27,17 +27,34 @@ searchButton.addEventListener("click", searchOrganizers);
 function getAllOrganizers() {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
+    console.log("ReadyState:", this.readyState, "Status:", this.status);
     if (this.readyState == 4) {
       if (this.status == 200) {
         organizersRow.innerHTML = "";
         let organizers = JSON.parse(request.responseText);
+        displayOrganizers(organizers);
+      } else {
+        console.log("Firebase unavailable, using mock data");
+        useMockData();
+      }
+    }
+  };
+  request.open("GET", `${fireBaseUrl}organizatoriFestivala.json`);
+  request.send();
+}
 
-        for (let id in organizers) {
-          let organizer = organizers[id];
-          organizersRow.innerHTML += `
+function useMockData() {
+  displayOrganizers(mockData.organizatoriFestivala);
+}
+
+function displayOrganizers(organizers) {
+  organizersRow.innerHTML = "";
+  for (let id in organizers) {
+    let organizer = organizers[id];
+    organizersRow.innerHTML += `
             <div class="col mb-4">
                 <div class="card border-4 rounded-3">
-                    <a href="organisator.html?organizerId=${id}">
+                    <a href="organizer.html?organizerId=${id}">
                         <div class="ratio ratio-16x9">
                             <img
                             class="card-img-top w-100 border-bottom-thick-orange"
@@ -51,14 +68,7 @@ function getAllOrganizers() {
                 </div>
             </div>
             `;
-        }
-      } else {
-        window.location.href = "greska.html?error=" + this.status;
-      }
-    }
-  };
-  request.open("GET", `${fireBaseUrl}organizatoriFestivala.json`);
-  request.send();
+  }
 }
 
 function searchOrganizers() {
@@ -78,7 +88,7 @@ function searchOrganizers() {
             organizersRow.innerHTML += `
             <div class="col mb-4">
                 <div class="card border-4 rounded-3">
-                    <a href="organisator.html?organizerId=${id}">
+                    <a href="organizer.html?organizerId=${id}">
                         <div class="ratio ratio-16x9">
                             <img
                             class="card-img-top w-100 border-bottom-thick-orange"
@@ -95,10 +105,37 @@ function searchOrganizers() {
           }
         }
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        console.log("Firebase unavailable during search, using mock data");
+        searchMockData(searchInput);
       }
     }
   };
   request.open("GET", `${fireBaseUrl}organizatoriFestivala.json`);
   request.send();
+}
+
+function searchMockData(searchInput) {
+  organizersRow.innerHTML = "";
+  for (let id in mockData.organizatoriFestivala) {
+    let organizer = mockData.organizatoriFestivala[id];
+    if (organizer.naziv.toLowerCase().includes(searchInput.toLowerCase())) {
+      organizersRow.innerHTML += `
+        <div class="col mb-4">
+            <div class="card border-4 rounded-3">
+                <a href="organizer.html?organizerId=${id}">
+                    <div class="ratio ratio-16x9">
+                        <img
+                        class="card-img-top w-100 border-bottom-thick-orange"
+                        src="${organizer.logo}"
+                        />
+                    </div>
+                    <div class="p-3 fw-normal text-center">
+                        <h4>${organizer.naziv}</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        `;
+    }
+  }
 }

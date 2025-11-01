@@ -4,16 +4,32 @@ const organizersTableData = document.getElementById("organizersTableData");
 getOrganizersTableData();
 
 function getOrganizersTableData() {
+  // Use mock data directly since Firebase is unavailable
+  console.log("Loading organizers from mock data for admin panel");
+  displayOrganizersTable(mockData.organizatoriFestivala);
+  return;
+
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {
         let organizers = JSON.parse(request.responseText);
-        organizersTableData.innerHTML = "";
+        displayOrganizersTable(organizers);
+      } else {
+        console.log("Firebase unavailable, using mock organizers data");
+        displayOrganizersTable(mockData.organizatoriFestivala);
+      }
+    }
+  };
+  request.open("GET", `${fireBaseUrl}organizatoriFestivala.json`);
+  request.send();
+}
 
-        for (let id in organizers) {
-          let organizer = organizers[id];
-          organizersTableData.innerHTML += `
+function displayOrganizersTable(organizers) {
+  organizersTableData.innerHTML = "";
+  for (let id in organizers) {
+    let organizer = organizers[id];
+    organizersTableData.innerHTML += `
             <tr>
                 <td>${organizer.naziv}</td>
                 <td>${organizer.adresa}</td>
@@ -85,61 +101,63 @@ function getOrganizersTableData() {
                 </td>
             </tr>`;
 
-          document.querySelectorAll(".dropdown-toggle").forEach((button) => {
-            button.addEventListener("click", function () {
-              let organizerId = this.getAttribute("data-organizer-id");
+    document.querySelectorAll(".dropdown-toggle").forEach((button) => {
+      button.addEventListener("click", function () {
+        let organizerId = this.getAttribute("data-organizer-id");
 
-              let festivals = this.getAttribute("data-festivals");
+        let festivals = this.getAttribute("data-festivals");
 
-              let deleteOrganizerLink =
-                this.nextElementSibling.querySelector(".deleteOrganizer");
-              deleteOrganizerLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                deleteOrganizer(organizerId);
-              });
+        let deleteOrganizerLink =
+          this.nextElementSibling.querySelector(".deleteOrganizer");
+        deleteOrganizerLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          deleteOrganizer(organizerId);
+        });
 
-              let editOrganizerLink =
-                this.nextElementSibling.querySelector(".editOrganizer");
-              editOrganizerLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                editOrganizer(organizerId);
-              });
+        let editOrganizerLink =
+          this.nextElementSibling.querySelector(".editOrganizer");
+        editOrganizerLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          editOrganizer(organizerId);
+        });
 
-              let deleteFestivalLink =
-                this.nextElementSibling.querySelector(".deleteFestival");
-              deleteFestivalLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                deleteFestival(festivals);
-              });
+        let deleteFestivalLink =
+          this.nextElementSibling.querySelector(".deleteFestival");
+        deleteFestivalLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          deleteFestival(festivals);
+        });
 
-              let addFestivalLink =
-                this.nextElementSibling.querySelector(".addFestival");
-              addFestivalLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                addFestival(festivals);
-              });
-            });
-          });
-        }
-      } else {
-        window.location.href = "greska.html?error=" + this.status;
-      }
-    }
-  };
-  request.open("GET", `${fireBaseUrl}/organizatoriFestivala.json`);
-  request.send();
+        let addFestivalLink =
+          this.nextElementSibling.querySelector(".addFestival");
+        addFestivalLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          addFestival(festivals);
+        });
+      });
+    });
+  }
 }
 
 // Delete Organizer function
 function deleteOrganizer(organizerId) {
   if (confirm("Da li ste sigurni da želite da obrišete organizatora?")) {
+    console.log("Mock delete organizer:", organizerId);
+    // In real app, this would delete from Firebase
+    // For mock, just remove from mockData and refresh table
+    delete mockData.organizatoriFestivala[organizerId];
+    getOrganizersTableData();
+    return;
+
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
       if (this.readyState == 4) {
         if (this.status == 200) {
           getOrganizersTableData();
         } else {
-          window.location.href = "greska.html?error=" + this.status;
+          console.log(
+            "Firebase unavailable, mock data functionality not implemented for this feature"
+          );
         }
       }
     };
@@ -159,12 +177,8 @@ function editOrganizer(organizerId) {
   // Input polja
   const inputOrganizerName = document.getElementById("inputOrganizerName");
   const inputOrganizerYear = document.getElementById("inputOrganizerYear");
-  const inputOrganizerPhone = document.getElementById(
-    "inputOrganizerPhone"
-  );
-  const inputOrganizerEmail = document.getElementById(
-    "inputOrganizerEmail"
-  );
+  const inputOrganizerPhone = document.getElementById("inputOrganizerPhone");
+  const inputOrganizerEmail = document.getElementById("inputOrganizerEmail");
   const inputOrganizerAddress = document.getElementById(
     "inputOrganizerAddress"
   );
@@ -172,6 +186,36 @@ function editOrganizer(organizerId) {
 
   // Dugme za edit
   const editButton = document.getElementById("EditOrganizerButton");
+
+  // Use mock data first, then try Firebase as fallback
+  if (mockData.organizatoriFestivala[organizerId]) {
+    let organizer_data = mockData.organizatoriFestivala[organizerId];
+
+    inputOrganizerName.value = organizer_data.Naziv;
+    inputOrganizerYear.value = organizer_data.GodinaOsnivanja;
+    inputOrganizerPhone.value = organizer_data.KontaktTelefon;
+    inputOrganizerEmail.value = organizer_data.Email;
+    inputOrganizerAddress.value = organizer_data.Adresa;
+
+    logo = organizer_data.Logo;
+    logoPreview.src = logo;
+
+    festivals = organizer_data.Festivali;
+
+    editValidateAndSend(
+      organizerId,
+      editOrganizerForm,
+      inputOrganizerName,
+      inputOrganizerYear,
+      inputOrganizerPhone,
+      inputOrganizerEmail,
+      inputOrganizerAddress,
+      editButton,
+      logo,
+      festivals
+    );
+    return;
+  }
 
   let request = new XMLHttpRequest();
   request.onreadystatechange = function () {
@@ -203,7 +247,9 @@ function editOrganizer(organizerId) {
           festivals
         );
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        console.log(
+          "Firebase unavailable, mock data functionality not implemented for this feature"
+        );
       }
     }
   };
@@ -321,6 +367,34 @@ function editValidateAndSend(
           festivali: festivals,
           logo: logo,
         };
+
+        // Update mock data
+        if (mockData.organizatoriFestivala[organizerId]) {
+          mockData.organizatoriFestivala[organizerId] = {
+            ...mockData.organizatoriFestivala[organizerId],
+            GodinaOsnivanja: year,
+            Naziv: name,
+            Email: email,
+            Adresa: address,
+            KontaktTelefon: phone,
+            Festivali: festivals,
+            Logo: logo,
+          };
+          console.log("Mock organizer updated:", organizerId);
+
+          let EditOrganizerModal =
+            document.getElementById("EditOrganizerModal");
+          let modalInstance = bootstrap.Modal.getInstance(EditOrganizerModal);
+          modalInstance.hide();
+
+          const alertSuccessfullOrganizerEdit = document.getElementById(
+            "alertSuccessfullOrganizerEdit"
+          );
+          alertSuccessfullOrganizerEdit.classList.add("show");
+          setTimeout(getOrganizersTableData, 500);
+          return;
+        }
+
         let req = new XMLHttpRequest();
         req.open(
           "PUT",
@@ -328,9 +402,7 @@ function editValidateAndSend(
         );
         req.send(JSON.stringify(edited_organizer));
 
-        let EditOrganizerModal = document.getElementById(
-          "EditOrganizerModal"
-        );
+        let EditOrganizerModal = document.getElementById("EditOrganizerModal");
         let modalInstance = bootstrap.Modal.getInstance(EditOrganizerModal);
         modalInstance.hide();
 
@@ -473,7 +545,9 @@ function addFestival(festivalCode) {
             );
             alertSuccessfullFestivalAdd.classList.add("show");
           } else {
-            window.location.href = "greska.html?error=" + this.status;
+            console.log(
+              "Firebase unavailable, mock data functionality not implemented for this feature"
+            );
           }
         }
       };
@@ -558,7 +632,9 @@ function makeDeleteFestivalModal(festivalsCode) {
             `;
         }
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        console.log(
+          "Firebase unavailable, mock data functionality not implemented for this feature"
+        );
       }
     }
   };
@@ -580,7 +656,9 @@ function removeFestival(festivalsCode, selected_festival) {
         );
         alertSuccessfullFestivalDeletion.classList.add("show");
       } else {
-        window.location.href = "greska.html?error=" + this.status;
+        console.log(
+          "Firebase unavailable, mock data functionality not implemented for this feature"
+        );
       }
     }
   };

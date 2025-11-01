@@ -54,6 +54,65 @@ loginUserForm.addEventListener("submit", function (e) {
   }
 
   if (goToServer) {
+    // Use mock data first
+    let users = mockData.korisnici;
+    let userFound = false;
+
+    for (let id in users) {
+      let user = users[id];
+      if (user.KorisnickoIme === username && user.Lozinka === password) {
+        // Validacija uspesna
+        inputLoginUsername.classList.add("is-valid");
+        inputLoginPassword.classList.add("is-valid");
+
+        ulogovaniKorisnik = {
+          korisnickoIme: user.KorisnickoIme,
+          lozinka: user.Lozinka,
+          ime: user.Ime,
+          prezime: user.Prezime,
+          email: user.Email,
+          datumRodjenja: user.DatumRodjenja,
+          adresa: user.Adresa,
+          telefon: user.Telefon,
+          zanimanje: user.Zanimanje,
+        };
+
+        localStorage.setItem(
+          "ulogovaniKorisnik",
+          JSON.stringify(ulogovaniKorisnik)
+        );
+        // Close the already open login modal
+        let modalElement = document.getElementById("loginUserModal");
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+        lookForUser();
+        const alertSuccessfullLogin = document.getElementById(
+          "alertSuccessfullLogin"
+        );
+        alertSuccessfullLogin.classList.add("show");
+        userFound = true;
+        break;
+      }
+    }
+
+    if (userFound) {
+      return;
+    }
+
+    // If not found in mock data, set error state
+    inputLoginUsername.classList.add("is-invalid");
+    inputLoginPassword.classList.add("is-invalid");
+    inputLoginUsername.classList.remove("is-valid");
+    inputLoginPassword.classList.remove("is-valid");
+    loginUserForm.classList.remove("was-validated");
+
+    usernameLoginInvalidFeedback.innerHTML =
+      "Kombinacija korisničkog imena i lozinke nije ispravna!";
+    passwordLoginInvalidFeedback.innerHTML =
+      "Kombinacija korisničkog imena i lozinke nije ispravna!";
+
+    return; // Don't try Firebase if mock data didn't work
+
     let request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
@@ -106,7 +165,9 @@ loginUserForm.addEventListener("submit", function (e) {
           passwordLoginInvalidFeedback.innerHTML =
             "Kombinacija korisničkog imena i lozinke nije ispravna!";
         } else {
-          window.location.href = "greska.html?error=" + this.status;
+          console.log(
+            "Firebase unavailable, mock authentication not implemented"
+          );
         }
       }
     };
@@ -311,6 +372,67 @@ registerUserForm.addEventListener("submit", function (e) {
       inputRegistrationAddress.classList.add("is-valid");
     }
     if (goToServer) {
+      // Check mock data first
+      let users = mockData.korisnici;
+      let userExists = false;
+
+      for (let id in users) {
+        let user = users[id];
+        if (user.KorisnickoIme === username) {
+          usernameRegisterInvalidFeedback.innerHTML =
+            "Korisničko ime je već zauzeto!";
+          inputRegistrationUsername.classList.add("is-invalid");
+          userExists = true;
+          break;
+        }
+      }
+
+      if (!userExists) {
+        inputRegistrationUsername.classList.add("is-valid");
+        ulogovaniKorisnik = {
+          korisnickoIme: username,
+          lozinka: password,
+          ime: name,
+          prezime: surname,
+          email: email,
+          datumRodjenja: birthday,
+          adresa: address,
+          telefon: phone,
+          zanimanje: education,
+        };
+
+        // Add to mock data
+        let newId = Object.keys(users).length;
+        mockData.korisnici[newId] = {
+          KorisnickoIme: username,
+          Lozinka: password,
+          Ime: name,
+          Prezime: surname,
+          Email: email,
+          DatumRodjenja: birthday,
+          Adresa: address,
+          Telefon: phone,
+          Zanimanje: education,
+        };
+
+        localStorage.setItem(
+          "ulogovaniKorisnik",
+          JSON.stringify(ulogovaniKorisnik)
+        );
+        let modalElement = document.getElementById("RegisterUserModal");
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+        lookForUser();
+        const alertSuccessfullRegistration = document.getElementById(
+          "alertSuccessfullRegistration"
+        );
+        alertSuccessfullRegistration.classList.add("show");
+        console.log("Mock user registered:", username);
+        return;
+      }
+
+      return; // Don't try Firebase if mock data handled it
+
       let request = new XMLHttpRequest();
 
       request.onreadystatechange = function () {
@@ -359,7 +481,9 @@ registerUserForm.addEventListener("submit", function (e) {
             alertSuccessfullRegistration.classList.add("show");
             return;
           } else {
-            window.location.href = "greska.html?error=" + this.status;
+            console.log(
+              "Firebase unavailable, mock authentication not implemented"
+            );
           }
         }
       };
